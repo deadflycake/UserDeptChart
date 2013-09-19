@@ -1,4 +1,4 @@
-[Rally](www.rallydev.com) Chart - Users by Department
+Rally Chart - Users by Department
 =========================
 
 ## Overview
