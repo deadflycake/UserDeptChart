@@ -1,15 +1,12 @@
-Exercise 4 - Charts
+[Rally](www.rallydev.com) Chart - Users by Department
 =========================
 
 ## Overview
 
-In this exercise, we will make an awesome ![User Department Chart](https://raw.github.com/deadflycake/UserDeptChart/master/UserDeptChartExample.png) showing story counts by schedule state.
+This chart provides an overview of the number of users assigned to each Department in Rally and the number not assigned.
 
-1. In getData(), create a store to fetch stories only for these 3 schedule states [Defined, In-Progress, Completed]
-2. In aggregateData(), loop through all stories and "bucketize" them
+![User Department Chart](https://raw.github.com/deadflycake/UserDeptChart/master/UserDeptChartExample.png)
 
-Once you have a chart rendering counts for the 3 schedule states:
+It is simple to adjust the chart the report on a different user attribute.
 
-3. Add a new schedule state 'Accepted'
-4. Add new chart colors with the RallyChart config 'chartColors'  (see API)
-5. Resize chart to 500x500 (TIP: See highcharts config for 'chart')
+The chart is particularly useful when used in conjunction with my [User Department Board](https://github.com/deadflycake/UserCards).
