@@ -16,24 +16,16 @@
     },
     getData: function() {
         var myFilter = Ext.create('Rally.data.QueryFilter', {
-            property: 'ScheduleState',
+            property: 'Disabled',
             operator: '=',
-            value: 'Defined'
-        }).or(Ext.create('Rally.data.QueryFilter', {
-            property: 'ScheduleState',
-            operator: '=',
-            value: 'In-Progress'
-        })).or(Ext.create('Rally.data.QueryFilter', {
-            property: 'ScheduleState',
-            operator: '=',
-            value: 'Completed'
-        }));
+            value: 'false'
+        });
         console.log(myFilter.toString());
         
         
         // TODO: wsapi data store; on load, aggregate data
         var store = Ext.create('Rally.data.WsapiDataStore', {
-            model: 'User Story',
+            model: 'User',
             listeners: {
                 load: function(store, data, success) {
                     //process data
@@ -45,25 +37,21 @@
             filters: [myFilter],
             
             autoLoad:true,
-            fetch: ['ScheduleState']
+            fetch: ['Department'],
+            limit: Infinity
         });
 
     },
-    aggregateData: function(storyRecords) {
+    aggregateData: function(userRecords) {
         // TODO: bucket stories by schedule state; render chart
-
-        var realData = {
-            "Defined": 0,
-            "In-Progress": 0,
-            "Completed": 0
-        }
         
-        Ext.Array.each(storyRecords, function(record) {
-            realData[record.get("ScheduleState")]++;
+        var deptGroupData = _.countBy(userRecords, function(record) {
+            return record.get("Department");
         });
-        console.log(realData);
-
-        this.renderChart(realData);
+        
+        console.log(deptGroupData);
+        
+        this.renderChart(deptGroupData);
     },
     renderChart: function(myData) {
         var myChartConfig = {
@@ -71,20 +59,20 @@
                 type: 'column'
             },
             title: {
-                text: 'User Stories'
+                text: 'License Usage by Department'
             },
             subtitle: {
-                text: 'Count by Schedule State'
+                text: 'Count by User Department'
             },
             xAxis: {
                 categories: [
-                    'User Stories'
+                    'Department'
                 ]
             },
             yAxis: {
                 min: 0,
                 title: {
-                    text: 'Count'
+                    text: 'Active User Count'
                 }
             },
             tooltip: {
@@ -103,17 +91,16 @@
             },
         };
         
+        var series = [];
+        Ext.Object.each(myData, function(key, value) {
+            series.push({
+                name:key,
+                data:[value]
+            });
+        });
+        
         var myChartData = {
-            series: [{
-                name: 'Defined',
-                data: [myData.Defined]
-            },{
-                name: 'In-Progress',
-                data: [myData['In-Progress']]
-            }, {
-                name: 'Completed',
-                data: [myData.Completed]
-            }, ]
+            series: series
         };
 
         var myChart = Ext.create('Rally.ui.chart.Chart', {
