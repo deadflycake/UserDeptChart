@@ -3,7 +3,7 @@ Exercise 4 - Charts
 
 ## Overview
 
-In this exercise, we will make an awesome [chart](https://help.rallydev.com/apps/2.0rc1/doc/#!/api/Rally.ui.chart.Chart) showing story counts by schedule state.
+In this exercise, we will make an awesome ![User Department Chart](https://raw.github.com/deadflycake/UserDeptChart/master/UserDeptChartExample.png) showing story counts by schedule state.
 
 1. In getData(), create a store to fetch stories only for these 3 schedule states [Defined, In-Progress, Completed]
 2. In aggregateData(), loop through all stories and "bucketize" them
